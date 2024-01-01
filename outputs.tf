@@ -7,5 +7,5 @@ output "public_ip_address" {
 }
 
 output "public_key" {
-  value = tls_private_key.example.public_key_openssh
+  value = tls_private_key.omegakey.public_key_openssh
 }
