@@ -14,12 +14,12 @@ resource "null_resource" "public_key" {
 
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
-  name     = "omega"
+  name     = "omega1"
 }
 
 # Create virtual network
 resource "azurerm_virtual_network" "my_terraform_network" {
-  name                = "myVnet"
+  name                = "myVnet1"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -27,7 +27,7 @@ resource "azurerm_virtual_network" "my_terraform_network" {
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
-  name                 = "mySubnet"
+  name                 = "mySubnet1"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
@@ -35,7 +35,7 @@ resource "azurerm_subnet" "my_terraform_subnet" {
 
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
-  name                = "myPublicIP"
+  name                = "myPublicIP1"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
@@ -43,7 +43,7 @@ resource "azurerm_public_ip" "my_terraform_public_ip" {
 
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "my_terraform_nsg" {
-  name                = "myNetworkSecurityGroup"
+  name                = "myNetworkSecurityGroup1"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -62,7 +62,7 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "my_terraform_nic" {
-  name                = "myNIC"
+  name                = "myNIC1"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -75,10 +75,10 @@ resource "azurerm_network_interface" "my_terraform_nic" {
 }
 
 # Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "example" {
-  network_interface_id      = azurerm_network_interface.my_terraform_nic.id
-  network_security_group_id = azurerm_network_security_group.my_terraform_nsg.id
-}
+#resource "azurerm_network_interface_security_group_association" "example" {
+#  network_interface_id      = azurerm_network_interface.my_terraform_nic.id
+#  network_security_group_id = azurerm_network_security_group.my_terraform_nsg.id
+#}
 
 # Generate random text for a unique storage account name
 resource "random_id" "random_id" {
@@ -92,7 +92,7 @@ resource "random_id" "random_id" {
 
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "my_storage_account" {
-  name                     = "diag${random_id.random_id.hex}"
+  name                     = "diag${random_id.random_id.hex}1"
   location                 = azurerm_resource_group.rg.location
   resource_group_name      = azurerm_resource_group.rg.name
   account_tier             = "Standard"
@@ -101,14 +101,14 @@ resource "azurerm_storage_account" "my_storage_account" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
-  name                  = "myVM"
+  name                  = "myVM1"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
   size                  = "Standard_DS1_v2"
 
   os_disk {
-    name                 = "myOsDisk"
+    name                 = "myOsDisk1"
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
 }
@@ -133,7 +133,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   }
 }
 resource "azurerm_sql_server" "monServeurSql" {
-  name                         = "mon-serveur-sql"
+  name                         = "mon-serveur-sql1"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
@@ -142,7 +142,7 @@ resource "azurerm_sql_server" "monServeurSql" {
 }
 
 resource "azurerm_sql_database" "maDatabaseSql" {
-  name                  = "ma-base-de-donnees-sql"
+  name                  = "ma-base-de-donnees-sql1"
   resource_group_name   = azurerm_resource_group.rg.name
   location              = azurerm_resource_group.rg.location
   server_name           = azurerm_sql_server.monServeurSql.name
@@ -154,3 +154,4 @@ resource "azurerm_sql_database" "maDatabaseSql" {
     environment = "development"
   }
 }
+
