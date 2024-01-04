@@ -23,8 +23,3 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "omega" {
-  name     = "omega-gr"
-  location = "westeurope"
-}
-
