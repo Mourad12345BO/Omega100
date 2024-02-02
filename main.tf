@@ -4,14 +4,6 @@ resource "tls_private_key" "omegakey" {
   rsa_bits    = 2048
 }
 
-# Récupération de la clé publique SSH à partir de la clé privée
-resource "null_resource" "public_key" {
-  provisioner "local-exec" {
-    command = "echo '${tls_private_key.omegakey.public_key_openssh}' > public_key.txt"
-  }
-  depends_on = [tls_private_key.omegakey]
-}
-
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
   name     = "omega1"
