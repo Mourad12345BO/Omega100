@@ -6,7 +6,7 @@ resource "tls_private_key" "omegakey" {
 
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
-  name     = "omega1"
+  name     = "omega2"
 }
 
 # Create virtual network
@@ -157,25 +157,25 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
     storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
   }
 }
-resource "azurerm_sql_server" "monServeurSql" {
-  name                         = "mon-serveur-sql1"
-  resource_group_name          = azurerm_resource_group.rg.name
-  location                     = azurerm_resource_group.rg.location
-  version                      = "12.0"
-  administrator_login          = "sqladmin"
-  administrator_login_password = "ChangeMe1Password!"
-}
+#resource "azurerm_sql_server" "monServeurSql" {
+#  name                         = "mon-serveur-sql1"
+#  resource_group_name          = azurerm_resource_group.rg.name
+#  location                     = azurerm_resource_group.rg.location
+#  version                      = "12.0"
+#  administrator_login          = "sqladmin"
+#  administrator_login_password = "ChangeMe1Password!"
+#}
 
-resource "azurerm_sql_database" "maDatabaseSql" {
-  name                  = "ma-base-de-donnees-sql1"
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = azurerm_resource_group.rg.location
-  server_name           = azurerm_sql_server.monServeurSql.name
-  edition               = "Basic"  # Définissez le niveau de service ici (Basic, Standard, Premium, etc.)
-  collation             = "SQL_Latin1_General_CP1_CI_AS"  # Spécifiez la collation si nécessaire
-  max_size_gb           = 2  # Définissez la taille maximale de la base de données en gigaoctets
+#resource "azurerm_sql_database" "maDatabaseSql" {
+#  name                  = "ma-base-de-donnees-sql1"
+#  resource_group_name   = azurerm_resource_group.rg.name
+#  location              = azurerm_resource_group.rg.location
+#  server_name           = azurerm_sql_server.monServeurSql.name
+#  edition               = "Basic"  # Définissez le niveau de service ici (Basic, Standard, Premium, etc.)
+#  collation             = "SQL_Latin1_General_CP1_CI_AS"  # Spécifiez la collation si nécessaire
+#  max_size_gb           = 2  # Définissez la taille maximale de la base de données en gigaoctets
 
-  tags = {
-    environment = "development"
-  }
-}
+#  tags = {
+#    environment = "development"
+#  }
+#}
